@@ -18,12 +18,353 @@ package test
 
 import (
 	"fmt"
+	"github.com/srwiley/oksvg"
+	"github.com/srwiley/rasterx"
+	"image"
+	"image/png"
+	"os"
 	"path/filepath"
 	"testing"
 
 	"github.com/pdfcpu/pdfcpu/pkg/api"
 	"github.com/pdfcpu/pdfcpu/pkg/pdfcpu"
 )
+
+func TestInject(t *testing.T) {
+	inFile := "E:/default.pdf"
+	outFile := "E:/default-custom.pdf"
+	formFile := "D:/performance/100vs100/form.json"
+	resourceDir := "D:/performance/100vs100/media"
+	pdfcpu.NewDefaultConfiguration()
+	err := api.InjectFormDataFile(inFile, outFile, formFile, resourceDir)
+	if err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestCustom(t *testing.T) {
+	inFile := "E:/default.pdf"
+	outFile := "E:/default-custom.pdf"
+	m := map[int][]*pdfcpu.Watermark{}
+
+	wms := []*pdfcpu.Watermark{}
+
+	wm, err := api.TextWatermark("1JCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -170, fillcol:#000000, rot:0, op:1.0", true, false, pdfcpu.POINTS)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("2JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -270, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("3JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -370, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("4JCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -470, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("5JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -570, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("6JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -670, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("7JCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -770, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("8JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -170, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("9JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -170, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("10JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -100, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	//
+
+	wm, err = api.TextWatermark("2JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -270, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("3JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -370, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("4JCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -470, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("5JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -570, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("6JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -670, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("7JCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -770, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("8JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -170, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("9JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -170, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("10JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -100, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("2JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -270, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("3JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -370, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("4JCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -470, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("5JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -570, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("6JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -670, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("7JCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -770, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("8JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -170, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("9JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -170, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("10JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -100, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("2JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -270, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("3JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -370, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("4JCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -470, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("5JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -570, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("6JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -670, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("7JCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -770, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("8JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -170, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("9JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -170, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("10JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -100, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("2JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -270, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("3JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -370, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("4JCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -470, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("5JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -570, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("6JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -670, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("7JCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -770, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("8JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -170, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("9JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -170, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("10JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -100, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("2JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -270, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("3JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -370, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("4JCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -470, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("5JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -570, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("6JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -670, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("7JCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -770, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("8JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -170, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("9JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -170, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("10JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -100, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("2JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -270, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("3JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -370, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("4JCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -470, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("5JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -570, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("6JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -670, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("7JCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -770, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("8JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -170, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("9JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -170, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("10JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -100, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("2JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -270, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("3JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -370, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("4JCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -470, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("5JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -570, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("6JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -670, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("7JCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -770, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("8JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -170, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("9JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -170, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("10JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -100, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("2JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -270, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("3JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -370, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("4JCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -470, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("5JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -570, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("6JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -670, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("7JCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -770, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("8JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -170, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("9JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -170, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("10JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -100, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("2JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -270, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("3JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -370, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("4JCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -470, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("5JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -570, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("6JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -670, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("7JCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -770, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("8JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -170, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("9JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -170, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	wm, err = api.TextWatermark("10JCHJCH", "font:Times-Italic, sc:1 abs, points:10, pos:tl, off:253 -100, fillc:#000000, rot:0", true, false, pdfcpu.POINTS)
+	wms = append(wms, wm)
+
+	m[1] = wms
+
+
+
+	err = api.AddWatermarksSliceMapFile(inFile, outFile, m, nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestSvgToPng(t *testing.T) {
+	inFile := filepath.Join("..", "..", "testdata", "resources", "sign.svg")
+	fmt.Println(inFile)
+
+	in, err := os.Open(inFile)
+	if err != nil {
+		panic(err)
+	}
+	defer in.Close()
+
+	icon, _ := oksvg.ReadIconStream(in)
+	w := icon.ViewBox.W
+	h := icon.ViewBox.H
+	icon.SetTarget(0, 0, w, h)
+	rgba := image.NewRGBA(image.Rect(0, 0, int(w), int(h)))
+	icon.Draw(rasterx.NewDasher(int(w), int(h), rasterx.NewScannerGV(int(w), int(h), rgba, rgba.Bounds())), 1)
+
+	out, err := os.Create("E:/out.png")
+	if err != nil {
+		panic(err)
+	}
+	defer out.Close()
+	err = png.Encode(out, rgba)
+	if err != nil {
+		t.Fatalf("%v\n", err)
+	}
+}
 
 func testAddWatermarks(t *testing.T, msg, inFile, outFile string, selectedPages []string, mode, modeParam, desc string, onTop bool) {
 	t.Helper()
@@ -50,7 +391,17 @@ func testAddWatermarks(t *testing.T, msg, inFile, outFile string, selectedPages 
 		t.Fatalf("%s: %v\n", msg, err)
 	}
 }
-
+func TestAddWatermark(t *testing.T) {
+	inFile := "E:/default.pdf"
+	outFile := "E:/default_temp.pdf"
+	selectedPages := []string{"1"}
+	modeParam := "ABC"
+	desc := "font:Courier, sc:1 abs, points:10, pos:tl, off:253 -670, fillc:#000000, rot:0"
+	err := api.AddTextWatermarksFile(inFile, outFile, selectedPages, false, modeParam, desc, nil)
+	if err != nil {
+		t.Fatalf("%s %s: %v\n", "ch", outFile, err)
+	}
+}
 func TestAddWatermarks(t *testing.T) {
 	for _, tt := range []struct {
 		msg             string
@@ -60,7 +411,6 @@ func TestAddWatermarks(t *testing.T) {
 		modeParm        string
 		wmConf          string
 	}{
-
 		{"TestWatermarkText",
 			"Walden.pdf",
 			"TextDefaults.pdf",
@@ -250,6 +600,30 @@ func TestAddWatermarks(t *testing.T) {
 				"bottom right corner with right alignment\n" +
 				"\"pos:br, off: -10 10, align:r, bgcol:#f7e6c7, rot:0\"",
 			"pos:br, off: -10 10, align:r, bgcol:#f7e6c7, rot:0"},
+
+		{"TestWatermarkText",
+			"custom.pdf",
+			"JCH.pdf",
+			[]string{"1-"},
+			"text",
+			"정채환",
+			"font:NotoSansCJKkr-Regular, sc:1 abs, points:10, pos:tl, off:253 -670, fillc:#000000, rot:0"},
+
+		{"TestStampImageAbsScaling",
+			"custom.pdf",
+			"JCHIMAGE.pdf",
+			[]string{"1-"},
+			"image",
+			filepath.Join(resDir, "stamp.png"),
+			"sc:.25 abs, pos:tl, offset:391 -651, rot:0"},
+
+		{"TestStampImageAbsScaling",
+			"custom.pdf",
+			"JCHCK.pdf",
+			[]string{"1-"},
+			"image",
+			filepath.Join(resDir, "checkbox.png"),
+			"sc:0.5 abs, pos:tl, offset:435.39375 -421.63125, rot:0"},
 
 		{"TestWatermarkText",
 			"Walden.pdf",

@@ -259,6 +259,69 @@ func AddWatermarks(rs io.ReadSeeker, w io.Writer, selectedPages []string, wm *pd
 	return nil
 }
 
+func CustomAddWatermarksFile(inFile, outFile string, wm *pdfcpu.Watermark, conf *pdfcpu.Configuration) (err error) {
+	var f1, f2 *os.File
+
+	if f1, err = os.Open(inFile); err != nil {
+		return err
+	}
+
+	tmpFile := inFile + ".tmp"
+	if outFile != "" && inFile != outFile {
+		tmpFile = outFile
+		log.CLI.Printf("writing %s...\n", outFile)
+	} else {
+		log.CLI.Printf("writing %s...\n", inFile)
+	}
+	if f2, err = os.Create(tmpFile); err != nil {
+		return err
+	}
+
+	defer func() {
+		if err != nil {
+			f2.Close()
+			f1.Close()
+			os.Remove(tmpFile)
+			return
+		}
+		if err = f2.Close(); err != nil {
+			return
+		}
+		if err = f1.Close(); err != nil {
+			return
+		}
+		if outFile == "" || inFile == outFile {
+			if err = os.Rename(tmpFile, inFile); err != nil {
+				return
+			}
+		}
+	}()
+	wm, err = TextWatermark("1JCH", "font:NotoSansCJKkr-Regular, sc:1 abs, points:10, pos:tl, off:253 -170, fillc:#000000, rot:0", false, false, pdfcpu.POINTS)
+	err = AddWatermarks(f1, f2, []string{"1"}, wm, conf)
+	wm, err = TextWatermark("2JCHJCH", "font:NotoSansCJKkr-Regular, sc:1 abs, points:10, pos:tl, off:253 -270, fillc:#000000, rot:0", false, false, pdfcpu.POINTS)
+	err = AddWatermarks(f1, f2, []string{"1"}, wm, conf)
+	wm, err = TextWatermark("3JCHJCH", "font:NotoSansCJKkr-Regular, sc:1 abs, points:10, pos:tl, off:253 -370, fillc:#000000, rot:0", false, false, pdfcpu.POINTS)
+	err = AddWatermarks(f1, f2, []string{"1"}, wm, conf)
+	wm, err = TextWatermark("4JCH", "font:NotoSansCJKkr-Regular, sc:1 abs, points:10, pos:tl, off:253 -470, fillc:#000000, rot:0", false, false, pdfcpu.POINTS)
+	err = AddWatermarks(f1, f2, []string{"1"}, wm, conf)
+	wm, err = TextWatermark("5JCHJCH", "font:NotoSansCJKkr-Regular, sc:1 abs, points:10, pos:tl, off:253 -570, fillc:#000000, rot:0", false, false, pdfcpu.POINTS)
+	err = AddWatermarks(f1, f2, []string{"1"}, wm, conf)
+	wm, err = TextWatermark("6JCHJCH", "font:NotoSansCJKkr-Regular, sc:1 abs, points:10, pos:tl, off:253 -670, fillc:#000000, rot:0", false, false, pdfcpu.POINTS)
+	err = AddWatermarks(f1, f2, []string{"1"}, wm, conf)
+	wm, err = TextWatermark("7JCH", "font:NotoSansCJKkr-Regular, sc:1 abs, points:10, pos:tl, off:253 -770, fillc:#000000, rot:0", false, false, pdfcpu.POINTS)
+	err = AddWatermarks(f1, f2, []string{"1"}, wm, conf)
+	wm, err = TextWatermark("8JCHJCH", "font:NotoSansCJKkr-Regular, sc:1 abs, points:10, pos:tl, off:253 -170, fillc:#000000, rot:0", false, false, pdfcpu.POINTS)
+	err = AddWatermarks(f1, f2, []string{"1"}, wm, conf)
+	wm, err = TextWatermark("9JCHJCH", "font:NotoSansCJKkr-Regular, sc:1 abs, points:10, pos:tl, off:253 -170, fillc:#000000, rot:0", false, false, pdfcpu.POINTS)
+	err = AddWatermarks(f1, f2, []string{"1"}, wm, conf)
+	wm, err = TextWatermark("10JCHJCH", "font:NotoSansCJKkr-Regular, sc:1 abs, points:10, pos:tl, off:253 -100, fillc:#000000, rot:0", false, false, pdfcpu.POINTS)
+	err = AddWatermarks(f1, f2, []string{"1"}, wm, conf)
+
+
+
+	return err
+}
+
 // AddWatermarksFile adds watermarks to all selected pages of inFile and writes the result to outFile.
 func AddWatermarksFile(inFile, outFile string, selectedPages []string, wm *pdfcpu.Watermark, conf *pdfcpu.Configuration) (err error) {
 	var f1, f2 *os.File

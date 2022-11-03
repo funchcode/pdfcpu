@@ -49,14 +49,15 @@ func testImportImages(t *testing.T, msg string, imgFiles []string, outFile, impC
 }
 
 func TestImportImages(t *testing.T) {
-	outDir := filepath.Join("..", "..", "samples", "import")
 
+	outDir := filepath.Join("..", "..", "samples", "import")
 	testFile1 := filepath.Join(outDir, "CenteredGraySepia.pdf")
 	if err := os.Remove(testFile1); err != nil {
 		t.Fatal(err)
 	}
 
 	testFile2 := filepath.Join(outDir, "Full.pdf")
+	testFile3 := filepath.Join(outDir, "custom.pdf")
 	if err := os.Remove(testFile2); err != nil {
 		t.Fatal(err)
 	}
@@ -67,6 +68,12 @@ func TestImportImages(t *testing.T) {
 		outFile  string
 		impConf  string
 	}{
+		// Render image on an A4 portrait mode page.
+		{"TestCenteredGraySepia",
+			[]string{filepath.Join(resDir, "stamp.png")},
+			testFile3,
+			"f:A4, pos:c, bgcol:#beded9"},
+
 		// Render image on an A4 portrait mode page.
 		{"TestCenteredGraySepia",
 			[]string{filepath.Join(resDir, "mountain.jpg")},

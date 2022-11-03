@@ -40,6 +40,8 @@ var (
 func init() {
 	initFlags()
 	initCommandMap()
+	customCommandMap()
+	customFlag()
 }
 
 func main() {

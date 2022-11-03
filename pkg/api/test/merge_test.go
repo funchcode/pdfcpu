@@ -26,6 +26,29 @@ import (
 	"github.com/pdfcpu/pdfcpu/pkg/api"
 )
 
+func TestMergeBigPageCreate(t *testing.T) {
+	msg := "TestMergeCreate"
+	inFiles := []string{
+		filepath.Join("E:/", "3M-long.pdf"),
+		filepath.Join("E:/", "3M-long.pdf"),
+		filepath.Join("E:/", "3M-long.pdf"),
+		filepath.Join("E:/", "3M-long.pdf"),
+		filepath.Join("E:/", "3M-long.pdf"),
+		filepath.Join("E:/", "3M-long.pdf"),
+		filepath.Join("E:/", "3M-long.pdf"),
+		filepath.Join("E:/", "3M-long.pdf"),
+		filepath.Join("E:/", "3M-long.pdf"),
+		filepath.Join("E:/", "3M-long.pdf"),
+	}
+	outFile := filepath.Join("E:/", "very-long-go.pdf")
+
+	// Merge inFiles by concatenation in the order specified and write the result to outFile.
+	// outFile will be overwritten.
+	if err := api.MergeCreateFile(inFiles, outFile, nil); err != nil {
+		t.Fatalf("%s: %v\n", msg, err)
+	}
+}
+
 func TestMergeCreate(t *testing.T) {
 	msg := "TestMergeCreate"
 	inFiles := []string{

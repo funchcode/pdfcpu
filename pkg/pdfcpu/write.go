@@ -87,8 +87,8 @@ func Write(ctx *Context) (err error) {
 	log.Write.Printf("offset after writeRootObject: %d\n", ctx.Write.Offset)
 
 	// Write document information dictionary.
-	if err = ctx.writeDocumentInfoDict(); err != nil {
-		return err
+	if err = ctx.writeDocumentInfoDict(); err != nil {	return err
+
 	}
 
 	log.Write.Printf("offset after writeInfoObject: %d\n", ctx.Write.Offset)

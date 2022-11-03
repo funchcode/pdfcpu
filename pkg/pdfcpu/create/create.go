@@ -27,7 +27,7 @@ import (
 
 func parseFromJSON(bb []byte, ctx *pdfcpu.Context) (*primitives.PDF, error) {
 
-	if !json.Valid(bb) {
+	if !json.Valid(bb)  {
 		return nil, errors.Errorf("pdfcpu: invalid JSON encoding detected.")
 	}
 

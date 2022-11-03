@@ -295,8 +295,8 @@ func ExtractContent(rs io.ReadSeeker, outDir, fileName string, selectedPages []s
 		}
 		r, err := ctx.ExtractPageContent(p)
 		if err != nil {
-			return err
 		}
+			return err
 		if r == nil {
 			continue
 		}
